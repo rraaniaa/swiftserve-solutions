@@ -14,6 +14,17 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 
+// Admin
+import AdminLayout from "./components/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import ProductsList from "./pages/admin/ProductsList";
+import ProductForm from "./pages/admin/ProductForm";
+import OrdersList from "./pages/admin/OrdersList";
+import OrderDetail from "./pages/admin/OrderDetail";
+import RepairsList from "./pages/admin/RepairsList";
+import RepairDetail from "./pages/admin/RepairDetail";
+import NewRepair from "./pages/admin/NewRepair";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -32,6 +43,20 @@ const App = () => (
               <Route path="/produit/:slug" element={<ProductDetail />} />
               <Route path="/panier" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="produits" element={<ProductsList />} />
+                <Route path="produits/nouveau" element={<ProductForm />} />
+                <Route path="produits/:id" element={<ProductForm />} />
+                <Route path="commandes" element={<OrdersList />} />
+                <Route path="commandes/:id" element={<OrderDetail />} />
+                <Route path="reparations" element={<RepairsList />} />
+                <Route path="reparations/nouvelle" element={<NewRepair />} />
+                <Route path="reparations/:id" element={<RepairDetail />} />
+              </Route>
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
