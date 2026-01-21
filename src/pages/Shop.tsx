@@ -136,12 +136,12 @@ const Shop = () => {
                   {/* Brand Filter */}
                   <div>
                     <label className="text-sm font-medium mb-2 block">Marque</label>
-                    <Select value={selectedBrand} onValueChange={setSelectedBrand}>
+                    <Select value={selectedBrand || "all"} onValueChange={(v) => setSelectedBrand(v === "all" ? "" : v)}>
                       <SelectTrigger>
                         <SelectValue placeholder="Toutes les marques" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">Toutes les marques</SelectItem>
+                        <SelectItem value="all">Toutes les marques</SelectItem>
                         {brands?.map((brand) => (
                           <SelectItem key={brand} value={brand}>{brand}</SelectItem>
                         ))}
