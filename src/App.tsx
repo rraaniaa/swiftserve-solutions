@@ -19,6 +19,8 @@ import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import ProductsList from "./pages/admin/ProductsList";
 import ProductForm from "./pages/admin/ProductForm";
+import CategoriesList from "./pages/admin/CategoriesList";
+import CategoryForm from "./pages/admin/CategoryForm";
 import OrdersList from "./pages/admin/OrdersList";
 import OrderDetail from "./pages/admin/OrderDetail";
 import RepairsList from "./pages/admin/RepairsList";
@@ -50,6 +52,9 @@ const App = () => (
                 <Route path="produits" element={<ProductsList />} />
                 <Route path="produits/nouveau" element={<ProductForm />} />
                 <Route path="produits/:id" element={<ProductForm />} />
+                <Route path="categories" element={<CategoriesList />} />
+                <Route path="categories/nouveau" element={<CategoryForm />} />
+                <Route path="categories/:id" element={<CategoryForm />} />
                 <Route path="commandes" element={<OrdersList />} />
                 <Route path="commandes/:id" element={<OrderDetail />} />
                 <Route path="reparations" element={<RepairsList />} />
