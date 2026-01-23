@@ -7,13 +7,15 @@ import {
   ShoppingCart, 
   User, 
   Search,
-  Smartphone,
-  Wrench,
-  Phone
+  LogOut
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, profile, signOut, isAdmin } = useAuth();
+  const { totalItems } = useCart();
 
   const navLinks = [
     { href: "/", label: "Accueil" },
@@ -33,7 +35,6 @@ const Header = () => {
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-primary to-amber-500 flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow">
                 <span className="font-display font-bold text-primary-foreground text-lg md:text-xl">F</span>
               </div>
-              {/* Circuit lines decoration */}
               <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-3 h-0.5 bg-primary/60" />
               <div className="absolute -right-2 top-1/3 w-2 h-0.5 bg-accent/60" />
               <div className="absolute -right-2 bottom-1/3 w-2 h-0.5 bg-secondary/60" />
@@ -55,30 +56,51 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className="px-4 py-2 text-sm font-medium text-primary hover:text-primary/80 hover:bg-primary/10 rounded-lg transition-all duration-200"
+              >
+                Admin
+              </Link>
+            )}
           </nav>
 
           {/* Actions */}
           <div className="flex items-center gap-2 md:gap-3">
-            {/* Search */}
-            <Button variant="ghost" size="icon" className="hidden md:flex">
-              <Search className="h-5 w-5" />
-            </Button>
+            <Link to="/boutique">
+              <Button variant="ghost" size="icon" className="hidden md:flex">
+                <Search className="h-5 w-5" />
+              </Button>
+            </Link>
 
-            {/* Cart */}
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-accent-foreground text-xs font-bold rounded-full flex items-center justify-center">
-                0
-              </span>
-            </Button>
+            <Link to="/panier">
+              <Button variant="ghost" size="icon" className="relative">
+                <ShoppingCart className="h-5 w-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-accent-foreground text-xs font-bold rounded-full flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
+              </Button>
+            </Link>
 
-            {/* User */}
-            <Button variant="glass" size="sm" className="hidden md:flex gap-2">
-              <User className="h-4 w-4" />
-              <span>Connexion</span>
-            </Button>
+            {user ? (
+              <Link to="/profil">
+                <Button variant="glass" size="sm" className="hidden md:flex gap-2">
+                  <User className="h-4 w-4" />
+                  <span>{profile?.full_name?.split(' ')[0] || 'Profil'}</span>
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/connexion">
+                <Button variant="glass" size="sm" className="hidden md:flex gap-2">
+                  <User className="h-4 w-4" />
+                  <span>Connexion</span>
+                </Button>
+              </Link>
+            )}
 
-            {/* Mobile menu toggle */}
             <Button
               variant="ghost"
               size="icon"
@@ -104,11 +126,37 @@ const Header = () => {
                   {link.label}
                 </Link>
               ))}
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="px-4 py-3 text-base font-medium text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Admin
+                </Link>
+              )}
               <div className="pt-4 mt-2 border-t border-border">
-                <Button variant="hero" className="w-full" size="lg">
-                  <User className="h-4 w-4" />
-                  Connexion
-                </Button>
+                {user ? (
+                  <div className="space-y-2">
+                    <Link to="/profil" onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="hero" className="w-full" size="lg">
+                        <User className="h-4 w-4" />
+                        Mon Profil
+                      </Button>
+                    </Link>
+                    <Button variant="outline" className="w-full" size="lg" onClick={() => { signOut(); setIsMenuOpen(false); }}>
+                      <LogOut className="h-4 w-4" />
+                      Déconnexion
+                    </Button>
+                  </div>
+                ) : (
+                  <Link to="/connexion" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="hero" className="w-full" size="lg">
+                      <User className="h-4 w-4" />
+                      Connexion
+                    </Button>
+                  </Link>
+                )}
               </div>
             </nav>
           </div>
