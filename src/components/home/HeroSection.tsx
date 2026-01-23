@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Wrench, ShoppingBag, ArrowRight } from "lucide-react";
 import heroBanner from "@/assets/hero-banner.jpg";
@@ -45,15 +46,19 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button variant="hero" size="xl" className="group">
-              <Wrench className="h-5 w-5" />
-              Réparer mon téléphone
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="glass" size="xl" className="group">
-              <ShoppingBag className="h-5 w-5" />
-              Voir la boutique
-            </Button>
+            <Link to="/reparation">
+              <Button variant="hero" size="xl" className="group">
+                <Wrench className="h-5 w-5" />
+                Réparer mon téléphone
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link to="/boutique">
+              <Button variant="glass" size="xl" className="group">
+                <ShoppingBag className="h-5 w-5" />
+                Voir la boutique
+              </Button>
+            </Link>
           </div>
 
           {/* Stats */}

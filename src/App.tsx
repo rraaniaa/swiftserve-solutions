@@ -13,6 +13,24 @@ import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Services from "./pages/Services";
+import Repair from "./pages/Repair";
+import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
+import LegalNotice from "./pages/legal/LegalNotice";
+import Privacy from "./pages/legal/Privacy";
+import Terms from "./pages/legal/Terms";
+import ChatAssistant from "./components/chat/ChatAssistant";
+
+// Profile
+import ProfileLayout from "./pages/profile/ProfileLayout";
+import Profile from "./pages/profile/Profile";
+import ProfileOrders from "./pages/profile/ProfileOrders";
+import ProfileOrderDetail from "./pages/profile/ProfileOrderDetail";
+import ProfileFavorites from "./pages/profile/ProfileFavorites";
+import ProfileRepairs from "./pages/profile/ProfileRepairs";
+import ProfileRepairDetail from "./pages/profile/ProfileRepairDetail";
+import ProfileSettings from "./pages/profile/ProfileSettings";
 
 // Admin
 import AdminLayout from "./components/admin/AdminLayout";
@@ -45,6 +63,24 @@ const App = () => (
               <Route path="/produit/:slug" element={<ProductDetail />} />
               <Route path="/panier" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/reparation" element={<Repair />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/mentions-legales" element={<LegalNotice />} />
+              <Route path="/confidentialite" element={<Privacy />} />
+              <Route path="/cgv" element={<Terms />} />
+              
+              {/* Profile Routes */}
+              <Route path="/profil" element={<ProfileLayout />}>
+                <Route index element={<Profile />} />
+                <Route path="commandes" element={<ProfileOrders />} />
+                <Route path="commandes/:id" element={<ProfileOrderDetail />} />
+                <Route path="favoris" element={<ProfileFavorites />} />
+                <Route path="reparations" element={<ProfileRepairs />} />
+                <Route path="reparations/:id" element={<ProfileRepairDetail />} />
+                <Route path="parametres" element={<ProfileSettings />} />
+              </Route>
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
@@ -64,6 +100,7 @@ const App = () => (
               
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <ChatAssistant />
           </BrowserRouter>
         </TooltipProvider>
       </CartProvider>

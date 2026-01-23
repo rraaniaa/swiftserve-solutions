@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Wrench, Clock, Shield, CheckCircle2, ArrowRight } from "lucide-react";
 
@@ -63,14 +64,18 @@ const RepairCTASection = () => {
 
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="lg" className="group">
-                <Wrench className="h-5 w-5" />
-                Demander un devis
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button variant="outline" size="lg">
-                Suivre ma réparation
-              </Button>
+              <Link to="/reparation">
+                <Button variant="hero" size="lg" className="group">
+                  <Wrench className="h-5 w-5" />
+                  Demander un devis
+                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link to="/reparation">
+                <Button variant="outline" size="lg">
+                  Suivre ma réparation
+                </Button>
+              </Link>
             </div>
           </div>
 
