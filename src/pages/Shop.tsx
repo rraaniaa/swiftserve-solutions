@@ -20,12 +20,12 @@ const iconMap: Record<string, React.ElementType> = {
   Smartphone, Shield, Cable, Watch, Speaker, Headphones, Package
 };
 
-const Shop = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+const Shop: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get('search') || '');
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
   const [selectedBrand, setSelectedBrand] = useState('');
-  const [priceRange, setPriceRange] = useState([0, 10000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [sortBy, setSortBy] = useState<'newest' | 'price_asc' | 'price_desc' | 'rating'>('newest');
   const [inStock, setInStock] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
@@ -46,9 +46,9 @@ const Shop = () => {
   const { addToCart } = useCart();
 
   const getStockStatus = (quantity: number, threshold: number = 5) => {
-    if (quantity === 0) return { label: 'Rupture', class: 'stock-empty' };
-    if (quantity <= threshold) return { label: 'Stock faible', class: 'stock-low' };
-    return { label: 'En stock', class: 'stock-available' };
+    if (quantity === 0) return { label: 'Rupture', class: 'border-red-500 text-red-500' };
+    if (quantity <= threshold) return { label: 'Stock faible', class: 'border-yellow-500 text-yellow-500' };
+    return { label: 'En stock', class: 'border-green-500 text-green-500' };
   };
 
   const handleCategoryClick = (slug: string) => {
@@ -67,7 +67,7 @@ const Shop = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           {/* Header */}
@@ -91,7 +91,7 @@ const Shop = () => {
               Tous
             </Button>
             {categories?.map((category) => {
-              const Icon = iconMap[category.icon || ''] || Package;
+              const Icon = iconMap[category.icon || 'Package'] || Package;
               return (
                 <Button
                   key={category.id}
@@ -255,7 +255,7 @@ const Shop = () => {
                   : 'space-y-4'
                 }>
                   {products?.map((product) => {
-                    const stockStatus = getStockStatus(product.stock_quantity, product.stock_threshold);
+                    const stockStatus = getStockStatus(product.stock_quantity);
                     
                     return (
                       <Card key={product.id} className="group card-hover overflow-hidden">
@@ -304,8 +304,8 @@ const Shop = () => {
                           {/* Rating */}
                           <div className="flex items-center gap-1 mb-2">
                             <Star className="w-3 h-3 fill-primary text-primary" />
-                            <span className="text-xs">{product.rating}</span>
-                            <span className="text-xs text-muted-foreground">({product.review_count})</span>
+                            <span className="text-xs">{product.rating || 0}</span>
+                            <span className="text-xs text-muted-foreground">({product.review_count || 0})</span>
                           </div>
 
                           {/* Price */}
